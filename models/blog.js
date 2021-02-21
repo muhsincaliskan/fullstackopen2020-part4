@@ -16,13 +16,17 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 const blogSchema = new mongoose.Schema({
-    title: {type:String, minlength:3,required:true,unique: true},
-    author: {type:String, required:true},
-    url: {type:String, required:true},
-    likes: {type:Number,default:0},
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    title: { type: String, minlength: 3, required: true, unique: true },
+    author: { type: String, required: true },
+    url: { type: String, required: true },
+    likes: { type: Number, default: 0 },
+    user: {
+        username: String,
+        name: String,
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
     }
 })
 

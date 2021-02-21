@@ -6,6 +6,9 @@ const userSchema = new mongoose.Schema({
     passwordHash: {type: String,  minlength:3,required:true },
     blogs: [
         {
+            url: String,
+            title: String,
+            author: String,
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Blog'
         }
@@ -15,8 +18,6 @@ const userSchema = new mongoose.Schema({
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
-        returnedObject.username = returnedObject._username.toString()
-        returnedObject.name = returnedObject._name.toString()
         delete returnedObject._id
         delete returnedObject.__v
         // the passwordHash should not be revealed

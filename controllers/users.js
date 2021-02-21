@@ -7,12 +7,12 @@ usersRouter.get('/', async (request, response) => {
         .find({}).populate('blogs', { title: 1, author: 1 })
     response.json(users.map(u => u.toJSON()))
 })
-usersRouter.post('/', async (request, response) => {
+usersRouter.post('/', async (request, response,next) => {
     try {
         const body = request.body
 
         const saltRounds = await bcrypt.genSalt(10)
-        const password=await body.passwordHash
+        const password = await body.passwordHash
         const passwordHash = await bcrypt.hash(password, saltRounds)
 
         const user = new User({
@@ -25,7 +25,7 @@ usersRouter.post('/', async (request, response) => {
 
         response.json(savedUser)
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 
 })
